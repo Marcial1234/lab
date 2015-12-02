@@ -44,22 +44,7 @@ wrongFormat = {}
 # 	 			testname = ' '.join(testname)
 # 				names.append(testname)
 
-# Compare genus, specific, and intra
-# (inputfile):
-# def comparator():
-# 	count = 0
-# inputfile = 'names_for_marcial.csv'
-# with open(inputfile, 'rb') as csvfile:
-# 	reader = csv.DictReader(csvfile)
-# 	for x in xrange(0,):
-# 		reader.next()
-# 		for row in reader:
-# 			testname = ' '.join([row['genus'], row['specificepithet'], row['infraspecificepithet']])
-# 			if testname == row['scientificname']:
-# 				count += 1
-# 		print count
-
-		# 97479 => oink.... | and & of this. wow... EP right here
+# 97479 => ^oink.... | and & of this. wow... EP right here
 
 ### Cleaners
 # Accepted documentation method/style?
@@ -85,8 +70,10 @@ def checkSpecialCharacters(wrongName):
 			else: break
 
 	tempName = ' '.join(tempName)
+	# REGEX HERE, do a loop and log each case.
 	tempName = re.sub('[\"]', '', tempName)
 	# does this work??? 
+	# Why have it on the first place??
 
 	return tempName.split() #' '.join(tempName)
 
@@ -103,19 +90,29 @@ def main():
 	logfile = 'log.txt'
 	inputfile = 'names_for_marcial.csv'
 	shorterfile = 'cleaned_names.csv'
+	fields = [['genus'],['specificepithet'],['infraspecificepithet']]
 
+
+	''' Had some timing done, not really needed after access to school machines?? '''
 	# io.extrator(inputfile, ['scientificname'])
-	names = io.shortextrator(inputfile)
-	print time.time() - start # 6.5 => CACHE!
+	# names = io.shortextrator(inputfile)
+	# print time.time() - start # 6.5 => CACHE!
+	# print time.time() - start # 2.3
+	names = io.extrator(inputfile)
 	io.depositor(shorterfile, names)
-	print time.time() - start # 2.3
-	# longnames = io.longextrator(inputfile)
+	longnames = io.extrator(inputfile, fields, names)
+	# Maps: #key : 'words'
 
 	# Separate based on # of words
-	# Needs own method
+	# Needs own method?
 	# this alone has all incompletes
-	for index in xrange(0,len(names)):
-		test = len(names[index].split())
+
+	# Search for spaces before doing this..
+
+	for key in names:
+		# [/w/s+] => log as too many spaces
+
+		test = len(names[key][0].split())
 		if test >= 2:
 			wrongFormat[index] = names[index]
 		elif test == 1:
@@ -141,21 +138,7 @@ def main():
 			elif test == 0:
 				empty[item] = names[item]
 
-	print time.time() - start # 2.4
-
-		# elif test2 < 4:
-		# 	# print "did it!"
-		# 	# tbdeleted.append(item)
-		# 	if test == 2:
-		# 		binomials[item] = longnames[item]
-		# 	elif test == 3:
-		# 		trinomials[item] = longnames[item]
-		# 	elif test == 1:
-		# 		incomplete[item] = names[item]
-		# 	elif test == 0:
-		# 		empty[item] = names[item]
-
-		# Do while type with hiearchy?
+	# print time.time() - start # 2.4
 
 	# Clean the newly fixed ones
 	for key in tbdeleted:
@@ -171,6 +154,7 @@ def main():
 	# Intersection:
 	# list(set(a) & set(b))
 	# Run 'main' twice, do above, log and $$
+	# Nope, ^ is better
 
 	# All maps
 	print len(empty) # 10391
@@ -206,6 +190,8 @@ def main():
 	# print count1 + count2
 	# Ready for synonyms check
 
+
+	# No bueno...
 	names2 = merge_dicts(empty, incomplete, wrongFormat, binomials, trinomials)
 	o.writeLog(logfile, names2)
 	print time.time() - start
