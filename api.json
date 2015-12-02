@@ -1,0 +1,24 @@
+{
+  "Bufo boreas": [
+    {
+      "isvalidname": false,
+      "name": "Bufo boreas",
+      "synonym_of": "Anaxyrus boreas",
+      "rank": "Species",
+      "taxonomyid": "11",
+      "tcid": "4b65fb75-331e-424c-a56f-eaa433dd3b8f"
+    },
+    {
+      "isvalidname": false,
+      "name": "Bufo boreas",
+      "synonym_of": "Anaxyrus boreas",
+      "rank": "Species",
+      "taxonomyid": "6",
+      "tcid": "b1ef9b0a-fb65-4552-b55e-432206db5d70"
+    }
+  ]
+}
+
+/tcsearch?searchstrs
+/taxonomyinfo
+then book
