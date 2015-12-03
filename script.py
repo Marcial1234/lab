@@ -4,10 +4,10 @@
 #	number of items wanted
 #	def regex for spaces, maybe?
 
-# import json #, time #, os, math, numpy, pandas, etc...
+# import json #, os, math, numpy, pandas, etc...
 import log as o, io, time, re
 
-start = time.time()
+# start = time.time()
 # names = [] # needs a CACHE or DB
 empty = {}
 empty2 = {}
@@ -17,36 +17,17 @@ trinomials = {}
 incomplete = {}
 wrongFormat = {}
 
-	
-''' Working on some stuff to do => empty = (empty | empty2)
-			# reverse the fieldnames.... Zzzz
-			testname = [row['genus'], row['specificepithet'], row['infraspecificepithet']]
- 			testname = ' '.join(testname)
- 			temp = testname.split()
- 			if temp == "":
-				testname = row['scientificname']
-				empty2[len(names)] = temp
+# 97479 => ^oink.... | and & of this.
 
-			names.append(testname)
-		# Do a testarr and return the array?
-		# nuuu you're too big already D:
-'''
+### Utility
+def merge_dicts(*dict_args):
+	result = {}
+	for dictionary in dict_args:
+		result.update(dictionary)
+	return result
 
-# TBA
-# def rangedExtrator(inputfile, end=len(names), *args): # inputfile
-# 	with open(inputfile, 'rb') as csvfile:
-# 		reader = csv.DictReader(csvfile)
-# 		testname = []
-# 		for row in reader:
-# 			for x in xrange(0, hardEnd):
-# 				for field in fieldnames:
-# 					testname.append(row[fieldnames])
-# 	 			testname = ' '.join(testname)
-# 				names.append(testname)
 
-# 97479 => ^oink.... | and & of this. wow... EP right here
-
-### Cleaners
+### Cleaner
 # Accepted documentation method/style?
 ''' 
 	Accepts a string. Checks if specific characters are found separated by spaces
@@ -72,16 +53,11 @@ def checkSpecialCharacters(wrongName):
 	tempName = ' '.join(tempName)
 	# REGEX HERE, do a loop and log each case.
 	tempName = re.sub('[\"]', '', tempName)
-	# does this work??? 
-	# Why have it on the first place??
+	# ALL ODD ONES
+	# 3518 '.' , 2609 '?' , 3212 '(' , 3575 ')' , 304 '[' , 329 ']' , 5 '{' , 5 '}'
 
-	return tempName.split() #' '.join(tempName)
+	return tempName.split() # ' '.join(tempName)
 
-def merge_dicts(*dict_args):
-    result = {}
-    for dictionary in dict_args:
-        result.update(dictionary)
-    return result
 
 ##### MAIN! #####
 def main():
@@ -93,7 +69,7 @@ def main():
 	fields = [['genus'],['specificepithet'],['infraspecificepithet']]
 
 
-	''' Had some timing done, not really needed after access to school machines?? '''
+	''' Had some timing checks, not really needed after access to school machines?? '''
 	# io.extrator(inputfile, ['scientificname'])
 	# names = io.shortextrator(inputfile)
 	# print time.time() - start # 6.5 => CACHE!
@@ -164,6 +140,7 @@ def main():
 	print len(trinomials) # 115337
 	# output this to files for the time being
 
+	# !! Need to do a sorted map first up to ~2000, or nah
 	# SHOW FIRST FEW
 	# for index in xrange(0,2000):
 	# 	try:
@@ -175,9 +152,6 @@ def main():
 	# 	except Exception, e:
 	# 		pass
 
-	# ALL ODD ONES
-	# 3518 '.' , 2609 '?' , 3212 '(' , 3575 ')' , 304 '[' , 329 ']' , 5 '{' , 5 '}'
-	# 
 	# count1 = 0
 	# count2 = 0
 	# for item in binomials:
@@ -191,10 +165,10 @@ def main():
 	# Ready for synonyms check
 
 
-	# No bueno...
+	# No bueno... ?
 	names2 = merge_dicts(empty, incomplete, wrongFormat, binomials, trinomials)
 	o.writeLog(logfile, names2)
-	print time.time() - start
+	# print time.time() - start
 
 if __name__ == '__main__':
 	main()

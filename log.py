@@ -1,11 +1,13 @@
 ### Logs
 logger = {}
 
+# attach message?
 def log(group, message, *args):
 	for name in group:
 		try: logger[name] += " and " + message # this wont happen much now, really
 		except: logger[name] = message
 
+# export to?
 def writeLog(logfile, names):
 	logText = ""
 	for index in sorted(logger):

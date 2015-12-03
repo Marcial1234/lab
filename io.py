@@ -1,6 +1,9 @@
 ### I/O Methods
 import csv
 
+
+# Combine into ONE SUPREME METHOD!
+
 ''' Extracting scientificnames to their own file, and putting them in memory '''
 # Could do a cache, or have it spit out the good ones, and then smash those against the API
 def extrator(inputfile, ): # fieldnames,
@@ -11,7 +14,7 @@ def extrator(inputfile, ): # fieldnames,
 		reader = csv.DictReader(csvfile)
 		for row in reader:
 			count += 1
-			names[count] = [row['scientificname']]
+			names[count] = row['scientificname']
 
 	return names
 
